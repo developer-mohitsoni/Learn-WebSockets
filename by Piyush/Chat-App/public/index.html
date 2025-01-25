@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+</head>
+
+<body>
+    <h1>Chatting</h1>
+
+    <input type="text" id="message" placeholder="Enter Message" />
+    <button id="sendBtn">Send</button>
+
+    <div id="messages"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Yahan hum ek instance bna rahe hai io ka
+        const socket = io();
+        const sendBtn = document.getElementById('sendBtn')
+        const messageInput = document.getElementById("message")
+        const allMessages = document.getElementById("messages")
+
+        // Jo bhi message aa raha hoga iss "message" event par from server side wo yahan listen ho raha hai jaise har ek user karte hai during chat communication.
+        socket.on('message', (message) => {
+            // console.log(message);
+            const p = document.createElement("p")
+            p.innerText = message
+
+            allMessages.appendChild(p)
+        })
+
+        sendBtn.addEventListener('click', (e) => {
+            const message = messageInput.value
+
+            console.log(message);
+
+            // Abb yahan user message ko emit karega server par taaki user ne jo bhi message paas kara hoga iss input box ke andar wo message iss "myMessage" event par send hoga using socket.emit("myMessage", message) or server par wo message hoga by receiving this same event "myMessage" using socket.on("myMessage", (message) => {})
+            socket.emit('myMessage', message)
+
+        })
+    </script>
+</body>
+
+</html>
