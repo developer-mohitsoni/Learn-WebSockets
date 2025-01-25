@@ -19,7 +19,6 @@ const wss = new WebSocketServer({
 wss.on("connection", (ws) => {
   // ye message mujhe ek data laakr ke dega jisko mai console kara raha hu
   ws.on("message", (data) => {
-
     // Yahn jo message console hoga wo buffer data hoga toh isko hum meaningful data bnane ke liye %s ka use kar rahe hai.
     console.log("Data from Client %s: ", data);
 
